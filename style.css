@@ -116,6 +116,8 @@ section {
 section input {
 	padding: 0.5rem;
 	border-radius: 1rem;
+	max-width: 20rem;
+	margin: 0px auto;
 }
 
 .main__score {
