@@ -1,35 +1,36 @@
 'use strict';
 
+const scoreDisplay = document.querySelector('.score');
 const secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 
-document.querySelector('.header__question-mark').textContent = secretNumber;
-document.querySelector('.score').textContent = score;
+scoreDisplay.textContent = score;
+
+const displayMessage = (message) => {
+	const feedbackMessage = document.querySelector('.main__score :first-child');
+	feedbackMessage.textContent = message;
+};
 
 document.querySelector('.check').addEventListener('click', () => {
 	const guessedNumber = document.querySelector('.main__input').value * 1;
-	const feedbackMessage = document.querySelector('.main__score :first-child');
 
 	if (!guessedNumber) {
-		feedbackMessage.textContent = 'No number!';
+		displayMessage('No number!');
 	} else if (guessedNumber === secretNumber) {
-		feedbackMessage.textContent = 'Correct number!';
+		displayMessage('Correct number!');
+		document.querySelector('.header__question-mark').textContent = secretNumber;
 		document.querySelector('body').style.backgroundColor = '#60b347';
-	} else if (guessedNumber > secretNumber) {
+	} else if (guessedNumber !== secretNumber) {
 		if (score > 1) {
-			feedbackMessage.textContent = 'Your guess was too high!';
-			document.querySelector('.score').textContent = score -= 1;
+			displayMessage(
+				guessedNumber > secretNumber
+					? 'Your guess was too high!'
+					: 'Your guess was too low!'
+			);
+			scoreDisplay.textContent = score -= 1;
 		} else {
-			feedbackMessage.textContent = 'You lost!';
-			document.querySelector('.score').textContent = 0;
-		}
-	} else {
-		if (score > 1) {
-			feedbackMessage.textContent = 'Your guess was too low!';
-			document.querySelector('.score').textContent = score -= 1;
-		} else {
-			feedbackMessage.textContent = 'You lost!';
-			document.querySelector('.score').textContent = 0;
+			displayMessage('You lost!');
+			scoreDisplay.textContent = 0;
 		}
 	}
 });
