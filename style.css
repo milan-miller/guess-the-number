@@ -126,3 +126,9 @@ section input {
 	align-items: center;
 	font-size: 1.5rem;
 }
+
+@media screen and (max-width: 28em) {
+	html {
+		font-size: 42.5%;
+	}
+}
