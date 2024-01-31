@@ -14,6 +14,7 @@ document.querySelector('.check').addEventListener('click', () => {
 		feedbackMessage.textContent = 'No number!';
 	} else if (guessedNumber === secretNumber) {
 		feedbackMessage.textContent = 'Correct number!';
+		document.querySelector('body').style.backgroundColor = '#60b347';
 	} else if (guessedNumber > secretNumber) {
 		if (score > 1) {
 			feedbackMessage.textContent = 'Your guess was too high!';
