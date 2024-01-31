@@ -3,16 +3,18 @@
 const bodyElement = document.querySelector('body');
 const scoreDisplay = document.querySelector('.score');
 const secretNumberDisplay = document.querySelector('.header__question-mark');
-const feedbackMessage = document.querySelector('.main__score :first-child');
+const feedbackMessage = document.querySelector('.main__scores :first-child');
+const highScoreDisplay = document.querySelector('.highscore');
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
+let previousHighscore = 0;
 
 const setBodyBackground = (color) => {
 	bodyElement.style.backgroundColor = color;
 };
 
-const setScoreDisplay = (score) => {
+const setScore = (score) => {
 	scoreDisplay.textContent = score;
 };
 
@@ -24,7 +26,11 @@ const displaySecretNumber = (message) => {
 	secretNumberDisplay.textContent = message;
 };
 
-setScoreDisplay(score);
+const setHighscore = (highscore) => {
+	highScoreDisplay.textContent = highscore;
+};
+
+setScore(score);
 
 document.querySelector('.check').addEventListener('click', () => {
 	const guessedNumber = document.querySelector('.main__input').value * 1;
@@ -35,6 +41,8 @@ document.querySelector('.check').addEventListener('click', () => {
 		displayMessage('Correct number!');
 		displaySecretNumber(secretNumber);
 		setBodyBackground('#60b347');
+		previousHighscore = score > previousHighscore ? score : previousHighscore;
+		setHighscore(previousHighscore);
 	} else if (guessedNumber !== secretNumber) {
 		if (score > 1) {
 			displayMessage(
@@ -45,7 +53,7 @@ document.querySelector('.check').addEventListener('click', () => {
 			scoreDisplay.textContent = score -= 1;
 		} else {
 			displayMessage('You lost!');
-			setScoreDisplay(0);
+			setScore(0);
 		}
 	}
 });
@@ -53,7 +61,7 @@ document.querySelector('.check').addEventListener('click', () => {
 document.querySelector('.again').addEventListener('click', () => {
 	secretNumber = Math.trunc(Math.random() * 20) + 1;
 	score = 20;
-	setScoreDisplay(score);
+	setScore(score);
 	displayMessage('Start guessing...');
 	displaySecretNumber('?');
 	setBodyBackground('#fff');
